@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Pilot",
+    "air_date": "December 2, 2013",
+    "episode": "S01 E01",
+    "seen": false
+  },
+  {
+    "id": 2,
+    "name": "Lawnmower Dog",
+    "air_date": "December 9, 2013",
+    "episode": "S01 E02",
+    "seen": true
+  },
+  {
+    "id": 21,
+    "name": "The Wedding Squanchers",
+    "air_date": "October 4, 2015",
+    "episode": "S02 E10",
+    "seen": false
+  }
+]
