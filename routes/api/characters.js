@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const immortalCharacterMiddleware = require('../../middleware/immortalCharacter');
+const verifyJWT = require('../../middleware/verifyJWT');
 let Character = require('../../models/characters.js');
 
 /*
@@ -13,7 +14,7 @@ router.get('/', (req, res) => {
 */
 
 //async/await approach
-router.get('/', async (req, res) => {
+router.get('/', verifyJWT, async (req, res) => {
   try {
     const characters = await Character.find();
     res.json(characters);
@@ -22,11 +23,16 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/immortalCharacter', immortalCharacterMiddleware, (req, res) => {
-  res.json(res.locals.immortal);
-});
+router.get(
+  '/immortalCharacter',
+  verifyJWT,
+  immortalCharacterMiddleware,
+  (req, res) => {
+    res.json(res.locals.immortal);
+  }
+);
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyJWT, async (req, res) => {
   try {
     const character = Character.findOne({ id: parseInt(req.params.id) });
     res.json(character);
@@ -35,7 +41,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', verifyJWT, async (req, res) => {
   try {
     const newId = await Character.findOne({}, { id: 1, _id: 0 })
       .sort({ id: -1 })
@@ -58,7 +64,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyJWT, async (req, res) => {
   try {
     const newChar = await Character.findOneAndUpdate(
       { id: parseInt(req.body.id) },
@@ -71,7 +77,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verifyJWT, async (req, res) => {
   try {
     await Character.findOneAndDelete({ id: parseInt(req.params.id) });
     res.json({});

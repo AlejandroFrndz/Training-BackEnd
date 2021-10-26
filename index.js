@@ -34,6 +34,10 @@ mongoose.connection.once('open', () => {
 //Configure Routes
 const charactersRoutes = require('./routes/api/characters');
 const episodesRoutes = require('./routes/api/episodes');
+const loginRoutes = require('./routes/login');
+const registerRoutes = require('./routes/register');
 
 app.use('/api/characters', charactersRoutes);
 app.use('/api/episodes', episodesRoutes);
+app.use('/login', loginRoutes);
+app.use('/register', registerRoutes);

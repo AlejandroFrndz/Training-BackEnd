@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 let Episode = require('../../models/episodes');
 let episodes = require('../../models/episodes.json');
+const verifyJWT = require('../../middleware/verifyJWT');
 
-router.get('/', async (req, res) => {
+router.get('/', verifyJWT, async (req, res) => {
   try {
     const episodes = await Episode.find();
     res.json(episodes);
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyJWT, async (req, res) => {
   try {
     const episode = Episode.findOne({ id: parseInt(req.params.id) });
     res.json(episode);
@@ -21,7 +22,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', verifyJWT, async (req, res) => {
   try {
     const newEpisode = await Episode.findOneAndUpdate(
       { id: parseInt(req.body.id) },
